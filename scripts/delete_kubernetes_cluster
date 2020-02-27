@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# TODO: maybe check if we created this cluster before destroying it?
+
+# we need to get rid of the service principal that was created to grant
+# our cluster access to our container registry
+# first get the id of the service principal
+SP_ID = az aks show \
+  --resource-group None \
+  --name None \
+  --query servicePrincipalProfile.clientId \
+  -o tsv
+
+# then use the id to delete it
+az ad sp delete --id $SP_ID
+
+# finally delete the actual cluster
+az aks delete \
+  --name None \
+  --resource-group None \
+  --no-wait \
+  --yes

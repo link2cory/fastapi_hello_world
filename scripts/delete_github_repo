@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# delete the github repo
+curl -u $GITHUB_USER:$GITHUB_TOKEN \
+	-X DELETE \
+	https://api.github.com/repos/$GITHUB_USER/fastapi_hello_world
+

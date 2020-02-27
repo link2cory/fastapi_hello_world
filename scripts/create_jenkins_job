@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "Creating Jenkins job..."
+
+# create a jenkins job for this project
+pipenv run jenkins-jobs \
+	--conf jenkins/jenkins_jobs.ini \
+	--user $JENKINS_USER \
+	--password $JENKINS_TOKEN \
+	update jenkins/job_config.yaml
+

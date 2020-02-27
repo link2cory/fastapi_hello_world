@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# remove the jenkins job
+pipenv run jenkins-jobs \
+	--conf jenkins/jenkins_jobs.ini \
+	--user $JENKINS_USER \
+	--password $JENKINS_TOKEN \
+	delete fastapi_hello_world 
+

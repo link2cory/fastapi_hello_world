@@ -1,0 +1,19 @@
+#!/bin/sh
+
+echo "Creating local and remote repository..."
+
+# create a github respository
+curl -u $GITHUB_USER:$GITHUB_TOKEN \
+	--data '@github_repo_config.json' \
+	https://api.github.com/user/repos
+
+# create a local git repo
+git init
+git add -A
+git commit --message "initial commit"
+
+# push the local repo up to github
+git remote add origin \
+	git@github.com:$GITHUB_USER/fastapi_hello_world.git
+git push -u origin master
+

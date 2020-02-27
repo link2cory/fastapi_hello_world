@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# remove the virtual environment for this project
+cd ~/.cookiecutters/temp/fastapi_hello_world \
+	&& pipenv --rm

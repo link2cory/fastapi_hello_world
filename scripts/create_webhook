@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Creating push event webhook..."
+
+# setup a github webhook to initial builds on push
+curl -u $GITHUB_USER:$GITHUB_TOKEN \
+	--data '@github_hook_build_config.json' \
+	https://api.github.com/repos/$GITHUB_USER/fastapi_hello_world/hooks

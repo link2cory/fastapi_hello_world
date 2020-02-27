@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source .env
+
+./scripts/delete_github_repo
+
+#./scripts/delete_jenkins_job
+
+./scripts/remove_pipenv
+
+./scripts/delete_local_project

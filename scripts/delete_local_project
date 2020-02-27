@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# remove the project folder
+cd ~/.cookiecutters/temp \
+	&& rm -f -r fastapi_hello_world

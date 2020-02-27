@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "Installing Dependencies into a virtual environment..."
+
+# since black is in pre-release we need to do this
+pipenv lock --pre
+
+# run pipenv install in the project directory
+pipenv install --dev
+
+# generate a requirements file
+pipenv lock -r > requirements.txt

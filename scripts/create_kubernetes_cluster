@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# this probably requires a login first
+#az login
+
+# TODO: check if the acr already exists, and make it if not
+
+# TODO: add a check if the cluster with the name already exists before 
+# trying to make it.  User could be adding on to existing cluster
+
+# create the kubernetes cluster
+az aks create \
+  --resource-group None \
+  --name None \
+  --node_count 1 \
+  --enable-addons monitoring \
+  --generate-ssh-keys \
+  --attach-acr link2coryACR.azurecr.io 
+
+

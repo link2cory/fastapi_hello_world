@@ -1,0 +1,9 @@
+- job:
+    name: 'fastapi_hello_world'
+    project-type: multibranch
+    script-path: 'jenkins/Jenkinsfile'
+    scm:
+        - github:
+            repo-owner: 'link2cory'
+            repo: 'fastapi_hello_world'
+            credentials-id: 'github-repo-scan'

@@ -1,0 +1,9 @@
+{
+    "name": "web",
+    "active": true,
+    "events": ["push"],
+    "config": {
+        "url": "http://jenkins.coryperkins.com/github-webhook/",
+        "content_type": "json"
+    }
+}
