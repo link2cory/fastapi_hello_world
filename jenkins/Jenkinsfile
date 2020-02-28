@@ -14,3 +14,22 @@ podTemplate(containers: [
 	}
 
 }
+
+podTemplate(containers: [
+	containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)
+]) {
+	node(POD_LABEL) {
+		container('dind') {
+			stage('Publish') {
+				// only deploy successful builds
+				if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+					docker.withRegistry('https://link2coryACR.azurecr.io', 'acr-credentials') {
+						image.push("${env.BUILD_ID}")
+						image.push("latest")
+					}
+				}
+			}
+		}
+	}
+
+}
