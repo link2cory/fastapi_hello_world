@@ -8,7 +8,7 @@ podTemplate {
 }
 
 podTemplate(containers: [
-	containerTemplate(name: 'dind', image: 'docker:dind', priveleged: true)
+	containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)
 ]) {
 	node(POD_LABEL) {
 		container('dind') {
