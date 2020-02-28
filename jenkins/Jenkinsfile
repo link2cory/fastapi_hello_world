@@ -1,31 +1,25 @@
 #!/usr/bin/env groovy
-
-node {
-	checkout scm
-	def image
-
-	// only process the master branch for now
-	// TODO: i think this can be configured in the job config
-	if (env.BRANCH_NAME == 'master') {
-
+podTemplate {
+	node(POD_LABEL) {
 		stage('Clone repository') {
 			checkout scm
 		}
+	}
+}
 
-		podTemplate(containers: [
-			containerTemplate(name: 'dind', image: 'docker:dind')
-		]) {
-			node(POD_LABEL) {
-				stage('Build') {
-					image = docker.build("link2coryACR.azurecr.io/fastapi_hello_world:${env.BUILD_ID}")
-				}
-			}
-
+podTemplate(containers: [
+	containerTemplate(name: 'dind', image: 'docker:dind')
+]) {
+	node(POD_LABEL) {
+		stage('Build') {
+			image = docker.build("link2coryACR.azurecr.io/fastapi_hello_world:${env.BUILD_ID}")
 		}
+	}
 
-		stage('Test') {
-		}
+}
 
+podTemplate {
+	node(POD_LABEL) {
 		stage('Publish') {
 			// only deploy successful builds
 			if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
@@ -49,5 +43,6 @@ node {
 				sh 'kubectl rollout restart deployment fastapi-hello-world'
 			}
 		}
+
 	}
 }
