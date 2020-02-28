@@ -12,9 +12,20 @@ node {
 			checkout scm
 		}
 
-		stage('Build') {
-			image = docker.build("link2coryACR.azurecr.io/fastapi_hello_world:${env.BUILD_ID}")
+		podTemplate(containers: [
+			containerTemplate(name: 'dind', image: 'docker:dind')
+		]) {
+			node(POD_LABEL) {
+				stage('Build') {
+					image = docker.build("link2coryACR.azurecr.io/fastapi_hello_world:${env.BUILD_ID}")
+				}
+			}
+
 		}
+
+#stage('Build') {
+#			image = docker.build("link2coryACR.azurecr.io/fastapi_hello_world:${env.BUILD_ID}")
+#		}
 
 		stage('Test') {
 		}
