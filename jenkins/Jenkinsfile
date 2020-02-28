@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 podTemplate {
-	node('jnlp') {
+	node(POD_LABEL) {
 		stage('Clone repository') {
 			checkout scm
 		}
@@ -8,7 +8,7 @@ podTemplate {
 }
 
 podTemplate {
-	node('docker') {
+	node(POD_LABEL) {
 		stage('Build Image ') {
 			echo 'built the image successfully!'
 		}
