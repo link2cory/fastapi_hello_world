@@ -7,11 +7,15 @@ podTemplate {
 	}
 }
 
-podTemplate {
+podTemplate(containers: [
+	containerTemplate(name: 'dind', image: 'docker:dind')
+]) {
 	node(POD_LABEL) {
-		stage('Build Image ') {
-			echo 'built the image successfully!'
+		container('dind') {
+			stage('Build') {
+				image = docker.build("link2coryACR.azurecr.io/fastapi_hello_world:${env.BUILD_ID}")
+			}
 		}
 	}
-}
 
+}
