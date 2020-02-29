@@ -14,8 +14,8 @@ spec:
     securityContext:
       privileged: true
     volumeMounts:
-      - mountPath: '/var/lib/docker'
-        name: docker-home
+    - mountPath: '/var/lib/docker'
+      name: docker-home
   volumes:
     name: docker-home
     persistentVolumeClaim:
@@ -46,8 +46,8 @@ spec:
     securityContext:
       privileged: true
     volumeMounts:
-      - mountPath: '/var/lib/docker'
-        name: docker-home
+    - mountPath: '/var/lib/docker'
+      name: docker-home
   volumes:
     name: docker-home
     persistentVolumeClaim:
