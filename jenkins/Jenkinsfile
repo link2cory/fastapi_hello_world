@@ -2,8 +2,25 @@
 def image
 
 podTemplate(
-     containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
-     volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
+//     containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
+//     volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
+     yaml: '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: dind
+    image: docker:dind
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - mountPath: '/var/lib/docker'
+        name: docker-home
+  volumes:
+    name: docker-home
+    persistentVolumeClaim:
+      claimName: docker-home-managed-disk
+'''
 ) {
 	node(POD_LABEL) {
 		container('dind') {
@@ -17,8 +34,25 @@ podTemplate(
 }
 
 podTemplate(
-     containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
-     volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
+//     containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
+//    volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
+     yaml: '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: dind
+    image: docker:dind
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - mountPath: '/var/lib/docker'
+        name: docker-home
+  volumes:
+    name: docker-home
+    persistentVolumeClaim:
+      claimName: docker-home-managed-disk
+'''
 ) {
 	node(POD_LABEL) {
 		container('dind') {
