@@ -3,7 +3,7 @@ def image
 
 podTemplate(
      containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
-//     volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
+     volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
 ) {
 	node(POD_LABEL) {
 		container('dind') {
@@ -18,7 +18,7 @@ podTemplate(
 
 podTemplate(
      containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
- //    volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
+     volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
 ) {
 	node(POD_LABEL) {
 		container('dind') {
