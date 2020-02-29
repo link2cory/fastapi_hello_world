@@ -12,6 +12,8 @@ spec:
   - name: dind
     image: docker:dind
     securityContext:
+      runAsUser: 0
+      fsGroup: 0
       privileged: true
     volumeMounts:
       - mountPath: '/var/lib/docker'
@@ -44,6 +46,8 @@ spec:
   - name: dind
     image: docker:dind
     securityContext:
+      runAsUser: 0
+      fsGroup: 0
       privileged: true
     volumeMounts:
       - mountPath: '/var/lib/docker'
