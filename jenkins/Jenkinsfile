@@ -14,12 +14,12 @@ spec:
     securityContext:
       privileged: true
     volumeMounts:
-    - mountPath: '/var/lib/docker'
-      name: docker-home
+      - mountPath: '/var/lib/docker'
+        name: docker-home
   volumes:
-    name: docker-home
-    persistentVolumeClaim:
-      claimName: docker-home-managed-disk
+    - name: docker-home
+      persistentVolumeClaim:
+        claimName: docker-home-managed-disk
 '''
 ) {
 	node(POD_LABEL) {
@@ -46,12 +46,12 @@ spec:
     securityContext:
       privileged: true
     volumeMounts:
-    - mountPath: '/var/lib/docker'
-      name: docker-home
+      - mountPath: '/var/lib/docker'
+        name: docker-home
   volumes:
-    name: docker-home
-    persistentVolumeClaim:
-      claimName: docker-home-managed-disk
+    - name: docker-home
+      persistentVolumeClaim:
+        claimName: docker-home-managed-disk
 '''
 ) {
 	node(POD_LABEL) {
