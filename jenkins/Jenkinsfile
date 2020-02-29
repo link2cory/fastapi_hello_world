@@ -1,9 +1,10 @@
 #!/usr/bin/env groovy
 def image
 
-podTemplate(containers: [
-	containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)
-]) {
+podTemplate(
+     containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
+     volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
+) {
 	node(POD_LABEL) {
 		container('dind') {
 			stage('Build') {
@@ -15,9 +16,10 @@ podTemplate(containers: [
 
 }
 
-podTemplate(containers: [
-	containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)
-]) {
+podTemplate(
+     containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
+     volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
+) {
 	node(POD_LABEL) {
 		container('dind') {
 			stage('Publish') {
