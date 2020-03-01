@@ -16,8 +16,8 @@ spec:
       fsGroup: 0
       privileged: true
     volumeMounts:
-      - mountPath: '/var/lib/docker'
-        name: docker-home
+      - name: docker-home
+        mountPath: /var/lib/docker
   volumes:
     - name: docker-home
       persistentVolumeClaim:
@@ -50,8 +50,8 @@ spec:
       fsGroup: 0
       privileged: true
     volumeMounts:
-      - mountPath: '/var/lib/docker'
-        name: docker-home
+      - name: docker-home
+        mountPath: /var/lib/docker
   volumes:
     - name: docker-home
       persistentVolumeClaim:
