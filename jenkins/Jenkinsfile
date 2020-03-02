@@ -20,8 +20,7 @@ spec:
         mountPath: /var/lib/docker
   volumes:
     - name: docker-home
-      persistentVolumeClaim:
-        claimName: docker-home-managed-disk
+      emptyDir: {}
 '''
 ) {
 	node(POD_LABEL) {
@@ -38,6 +37,8 @@ spec:
 podTemplate(
 //     containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
 //    volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
+      //persistentVolumeClaim:
+       // claimName: docker-home-managed-disk 
      yaml: '''
 apiVersion: v1
 kind: Pod
@@ -54,8 +55,7 @@ spec:
         mountPath: /var/lib/docker
   volumes:
     - name: docker-home
-      persistentVolumeClaim:
-        claimName: docker-home-managed-disk
+      emptyDir: {}
 '''
 ) {
 	node(POD_LABEL) {
