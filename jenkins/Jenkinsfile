@@ -2,25 +2,33 @@
 def image
 
 podTemplate(
-     containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
-     volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
-//     yaml: '''
-//apiVersion: v1
-//kind: Pod
-//spec:
-//  containers:
-//  - name: dind
-//    image: docker:dind
-//    securityContext:
-//      privileged: true
-//    volumeMounts:
-//      - name: docker-home
-//        mountPath: /var/lib/docker
-//  volumes:
-//    - name: docker-home
-//      persistentVolumeClaim:
-//        claimName: docker-home-managed-disk
-//'''
+//     containers:[containerTemplate(name: 'dind', image: 'docker:dind', privileged: true)],
+//     volumes: [persistentVolumeClaim(claimName: 'docker-home-managed-disk', mountPath: '/var/lib/docker')]
+     yaml: '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: dind
+    image: docker:19.03.1 
+    command:
+    - sleep
+    args:
+    - 99d
+    env:
+    - name: DOCKER_HOST
+      value: tcp:localhost:2375
+  - name: docker-daemon
+    image: docker:19.03.1-dind
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - name: docker-home
+        mountPath: /var/lib/docker
+  volumes:
+  - name: docker-home
+    persistentVolumeClaim:
+    claimName: docker-home-managed-disk
 ) {
 	node(POD_LABEL) {
 		container('dind') {
