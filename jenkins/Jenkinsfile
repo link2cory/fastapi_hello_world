@@ -12,6 +12,8 @@ spec:
   - name: dind
     image: docker:dind
     securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
       privileged: true
     volumeMounts:
       - name: docker-home
@@ -44,6 +46,8 @@ spec:
   - name: dind
     image: docker:dind
     securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
       privileged: true
     volumeMounts:
       - name: docker-home
