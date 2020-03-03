@@ -29,6 +29,7 @@ spec:
   - name: docker-home
     persistentVolumeClaim:
     claimName: docker-home-managed-disk
+'''	
 ) {
 	node(POD_LABEL) {
 		container('dind') {
