@@ -1,0 +1,48 @@
+#!/usr/bin/env groovy
+podTemplate {
+	node(POD_LABEL) {
+		stage('Clone repository') {
+			checkout scm
+		}
+	}
+}
+
+podTemplate(containers: [
+	containerTemplate(name: 'dind', image: 'docker:dind')
+]) {
+	node(POD_LABEL) {
+		stage('Build') {
+			image = docker.build("link2coryACR.azurecr.io/fastapi_hello_world:${env.BUILD_ID}")
+		}
+	}
+
+}
+
+podTemplate {
+	node(POD_LABEL) {
+		stage('Publish') {
+			// only deploy successful builds
+			if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+				docker.withRegistry('https://link2coryACR.azurecr.io', 'acr-credentials') {
+					image.push("${env.BUILD_ID}")
+					image.push("latest")
+				}
+			}
+		}
+
+		stage('Deploy') {
+			withCredentials([usernamePassword(credentialsId: 'aks-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+				// login to azure using the aks service principal so we can get the kubernetes cluster config 
+				sh 'az login -u $USERNAME -p $PASSWORD --service-principal --tenant 6f5ca4ff-9e13-4312-bef4-2ab4ff72c7f6'
+				sh 'az aks get-credentials --resource-group sandbox --name myAKSCluster'
+
+				// apply any updates to the k8s file
+				sh 'kubectl apply -f k8s.yaml'
+
+				// rollout the new build image
+				sh 'kubectl rollout restart deployment fastapi-hello-world'
+			}
+		}
+
+	}
+}
